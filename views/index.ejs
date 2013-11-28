@@ -5,7 +5,26 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Message Board</h1>
+    <form action="/messages" method="POST">
+      <label for="name">Name:</label><input type="text" name="name" id="name">
+      <label for="msg">Message:</label><input type="text" name="message" id="msg">
+      <input type="submit" value="Send">
+    </form>
+    <br />
+    <% if(messages){ %>
+      <% for(var i=0;i<messages.length;i++){ %>
+       <div class="message_row">
+         <div class="msg_content"><%= messages[i].content %></div>
+         <div class="msg_footer">written by <%= messages[i].author %> At:<%= messages[i].createdAt %></div>
+         <div class="msg_delete">
+           <form action="/messages/<%= messages[i].id%>" method="POST" id="delete">
+             <input type="hidden" value="DELETE" name="_method">
+             <a href="#" onclick="document.getElementById('delete').submit()">delete</a>
+           </form> 
+         </div>
+       </div> 
+      <% } %>
+    <% } %>
   </body>
 </html>

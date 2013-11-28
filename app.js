@@ -5,6 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var message = require('./routes/message');
 var http = require('http');
 var path = require('path');
 var db = require('./models');
@@ -23,6 +24,8 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
+app.post('/messages', message.create);
+app.delete('/messages/:id', message.delete);
 
 db.sequelize.sync().complete(function(err) {
   if (err) {
